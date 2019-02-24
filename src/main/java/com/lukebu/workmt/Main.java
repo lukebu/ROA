@@ -8,11 +8,14 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    public static final int SCENE_WIDTH_SMALL = 600;
+    public static final int SCENE_HIGH_SMALL = 400;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("workmt.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/scenes/workmt.fxml"));
         primaryStage.setTitle("Work MT");
-        primaryStage.setScene(new Scene(root, 700, 500));
+        primaryStage.setScene(new Scene(root, SCENE_WIDTH_SMALL, SCENE_HIGH_SMALL));
         primaryStage.show();
     }
 
