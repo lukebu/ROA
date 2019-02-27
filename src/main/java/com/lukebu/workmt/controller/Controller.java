@@ -11,6 +11,7 @@ import javafx.scene.control.TextArea;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,12 +45,16 @@ public class Controller {
         toDoItem.add(toDoItemFour);
         toDoItem.add(toDoItemFive);
 
+
+
         toDoItemListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ToDoItem>() {
             @Override
             public void changed(ObservableValue<? extends ToDoItem> observable, ToDoItem oldValue, ToDoItem newValue) {
                 if (newValue != null) {
                     ToDoItem item = toDoItemListView.getSelectionModel().getSelectedItem();
                     toDoItemTextAreaDetails.setText(item.getTaskDescription());
+                    DateTimeFormatter df = DateTimeFormatter.ISO_LOCAL_DATE;
+                    dueDateLabel.setText(df.format(item.getDueDate()));
             }
         };
         });
@@ -67,7 +72,7 @@ public class Controller {
         sb.append("\n");
         sb.append("\n");
         sb.append("\n");
-        dueDateLabel.setText(toDoItem.getDueDate().toString());
+
         toDoItemTextAreaDetails.setText(sb.toString());
 
     }

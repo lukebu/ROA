@@ -8,7 +8,7 @@
 <BorderPane fx:controller="com.lukebu.workmt.controller.Controller" xmlns:fx="http://javafx.com/fxml" >
 
     <left>
-    <ListView fx:id="toDoItemListView" onMouseClicked="#handleClickListView" />
+    <ListView fx:id="toDoItemListView"/>
     </left>
     <center>
         <VBox style="-fx-background-color: white">
