@@ -45,7 +45,7 @@
                 </font>
             </Label>
             <PasswordField fx:id="passwordPF" GridPane.rowIndex="2" GridPane.columnIndex="1" promptText="Hasło"/>
-            <Label textFill="crimson" fx:id="errorMsgLabel" GridPane.rowIndex="3" GridPane.columnIndex="0">
+            <Label textFill="crimson" fx:id="errorMsgLabel" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2">
                 <font>
                     <Font name="Arial bold" size="14"/>
                 </font>

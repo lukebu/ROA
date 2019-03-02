@@ -34,6 +34,20 @@ public class Connector {
             return rs;
     }
 
+    public int insertUpdateStatement(final String updateQuery) {
+        int rs = 0;
+
+        try {
+            stmt = c.createStatement();
+            rs = stmt.executeUpdate(updateQuery);
+        } catch (Exception e) {
+            System.out.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return rs;
+    }
+
+
     public void closeConnectionWithCommit() {
         try {
             c.commit();

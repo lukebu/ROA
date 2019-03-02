@@ -30,10 +30,10 @@ public class LoginController {
     @FXML
     private Label errorMsgLabel;
 
-    Connector conector = new Connector();
-    LoginQuery loginQuery = new LoginQuery();
+    private Connector conector = new Connector();
+    private LoginQuery loginQuery = new LoginQuery();
 
-    public boolean isLoginCorrect() throws SQLException {
+    private boolean isLoginCorrect() throws SQLException {
         boolean letIn = false;
         ResultSet rs = null;
 
@@ -58,21 +58,16 @@ public class LoginController {
         }
         conector.closeConnectionWithCommit();
         return letIn;
-
     }
 
     @FXML
     public void handleSubmitButtonAction(ActionEvent e) throws Exception{
         if (isLoginCorrect()){
-         //   Main.instance.showDashboardScene();
-            System.out.println("\n");
-            System.out.println("DANE OK, TRZEBA DOROBIĆ KOLEJNE EKRANY :)");
+            Main.getInstance().showDashboardScene();
         } else {
             loginTextField.clear();
             passwordPF.clear();
             errorMsgLabel.setText("Username or Password is not Correct");
         }
     }
-
-
 }
