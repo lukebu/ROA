@@ -1,5 +1,6 @@
 package com.lukebu.workmt;
 
+import com.lukebu.workmt.context.ClientContext;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,6 +17,7 @@ public class Main extends Application {
 
     private Stage primaryStage;
     private BorderPane borderPane;
+
 
     private static final int SCENE_WIDTH_SMALL = 800;
     private static final int SCENE_HIGH_SMALL = 600;
@@ -47,7 +49,7 @@ public class Main extends Application {
         loader.setLocation(getClass().getResource("/scenes/dashboard.fxml"));
         borderPane = loader.load();
         primaryStage.getScene().setRoot(borderPane);
-        primaryStage.setMaximized(true);
+        //primaryStage.setMaximized(true);
     }
 
     public static void main(String[] args) {

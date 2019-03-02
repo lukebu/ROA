@@ -5,8 +5,37 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.text.Font?>
-<BorderPane fx:controller="com.lukebu.workmt.controller.Controller" xmlns:fx="http://javafx.com/fxml" >
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<BorderPane fx:controller="com.lukebu.workmt.dashboard.DashboardController" xmlns:fx="http://javafx.com/fxml" >
 
+    <top>
+        <MenuBar>
+            <Menu text="Plik">
+                <items>
+                    <MenuItem text="Zakończ" />
+                </items>
+            </Menu>
+            <Menu text="Zadania">
+                <items>
+                    <MenuItem text="Lista zadań" />
+                    <MenuItem text="Dodaj zadanie"/>
+                    <MenuItem text="Modyfikuj zadanie"/>
+                </items>
+            </Menu>
+            <Menu text="Kontakty">
+                <items>
+                    <MenuItem text="Lista kontaktów" />
+                    <MenuItem text="Dodaj kontakt" />
+                    <MenuItem text="Modyfikuj kontakt" />
+                </items>
+            </Menu>
+            <Menu text="O nas">
+                <MenuItem text="about"/>
+            </Menu>
+        </MenuBar>
+    </top>
     <left>
     <ListView fx:id="toDoItemListView"/>
     </left>
@@ -29,5 +58,19 @@
             </HBox>
         </VBox>
     </center>
+    <bottom>
+        <VBox alignment="BOTTOM_CENTER">
+            <Label textFill="darkblue" text="© 2019 Open Games Group" >
+                <font>
+                    <Font name="Arial bold" size="9"/>
+                </font>
+            </Label>
+            <Label textFill="darkblue" text="All copyrights and trademarks are the property of their respective owners." >
+                <font>
+                    <Font name="Arial bold" size="9"/>
+                </font>
+            </Label>
+        </VBox>
+    </bottom>
 
 </BorderPane>

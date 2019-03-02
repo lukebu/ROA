@@ -2,6 +2,7 @@ package com.lukebu.workmt.login;
 
 import com.lukebu.workmt.Main;
 import com.lukebu.workmt.conector.Connector;
+import com.lukebu.workmt.context.ClientContext;
 import com.lukebu.workmt.query.LoginQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,7 +31,7 @@ public class LoginController {
     @FXML
     private Label errorMsgLabel;
 
-    private Connector conector = new Connector();
+    private Connector connector = new Connector();
     private LoginQuery loginQuery = new LoginQuery();
 
     private boolean isLoginCorrect() throws SQLException {
@@ -42,21 +43,23 @@ public class LoginController {
 
         String statementQuery =  loginQuery.prepareQuery();
 
-        conector.createConnectionToDb();
-        rs = conector.insertQueryStatement(statementQuery);
+        connector.createConnectionToDb();
+        rs = connector.insertQueryStatement(statementQuery);
 
         while (rs.next()) {
-            if(rs.getString("USR_LOGIN") != null && rs.getString("USR_PASSWORD")!= null ) {
+            if(rs.getString("USR_LOGIN") != null && rs.getString("USR_PASSWORD")!= null && rs.getInt("USR_ID") != 0) {
                 String username = rs.getString("USR_LOGIN");
-                System.out.print("USR_LOGIN = " + username);
+                //System.out.print("USR_LOGIN = " + username);
                 String password = rs.getString("USR_PASSWORD");
-                System.out.print("USR_PASSWORD = " + password);
+                //System.out.print("USR_PASSWORD = " + password);
+                int userId = rs.getInt("USR_ID");
+                ClientContext.getInstance().prepareClientContext(userId);
                 letIn = true;
             } else {
-                conector.closeConnectionWithCommit();
+                connector.closeConnectionWithCommit();
             }
         }
-        conector.closeConnectionWithCommit();
+        connector.closeConnectionWithCommit();
         return letIn;
     }
 
