@@ -1,12 +1,10 @@
 package com.lukebu.workmt.dashboard;
 
-import com.lukebu.workmt.Main;
 import com.lukebu.workmt.conector.Connector;
 import com.lukebu.workmt.query.SelectTasksQuery;
 import com.lukebu.workmt.tasks.Task;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -15,8 +13,6 @@ import javafx.scene.control.TextArea;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,7 +46,6 @@ public class DashboardController {
                 int userId = rs.getInt("TSK_USR_ID");
                 String taskName = rs.getString("TSK_NAME");
                 String taskDescription = rs.getString("TSK_DESCRIPTION");
-                System.out.println(new Date());
                 Date taskDueDate = rs.getDate("TSK_DUE_DATE");
 
                 Task task = new Task(taskId,userId,taskName,taskDescription,taskDueDate);
@@ -76,36 +71,5 @@ public class DashboardController {
         toDoItemListView.getItems().setAll(tasks);
         toDoItemListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         toDoItemListView.getSelectionModel().selectFirst();
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public void handleClickListView() {
-        Task task = toDoItemListView.getSelectionModel().getSelectedItem();
-        StringBuilder sb = new StringBuilder();
-        sb.append(task.getTaskDescription());
-        //sb.append(tasks.getTaskName());
-        sb.append("\n");
-        sb.append("\n");
-        sb.append("\n");
-        sb.append("\n");
-
-        toDoItemTextAreaDetails.setText(sb.toString());
-
     }
 }

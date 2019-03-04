@@ -1,0 +1,27 @@
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<MenuBar>
+    <Menu text="Plik">
+        <items>
+            <MenuItem text="Zakończ" />
+        </items>
+    </Menu>
+    <Menu text="Zadania">
+        <items>
+            <MenuItem text="Lista zadań" />
+            <MenuItem text="Dodaj zadanie"/>
+            <MenuItem text="Modyfikuj zadanie"/>
+        </items>
+    </Menu>
+    <Menu text="Kontakty">
+        <items>
+            <MenuItem text="Lista kontaktów" />
+            <MenuItem text="Dodaj kontakt" />
+            <MenuItem text="Modyfikuj kontakt" />
+        </items>
+    </Menu>
+    <Menu text="O nas">
+        <MenuItem text="about"/>
+    </Menu>
+</MenuBar>
