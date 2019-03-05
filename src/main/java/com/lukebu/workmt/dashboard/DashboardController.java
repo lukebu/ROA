@@ -11,11 +11,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Timer;
 
 public class DashboardController {
 
@@ -33,7 +36,7 @@ public class DashboardController {
 
     public void initialize() throws SQLException {
         ResultSet rs = null;
-        tasks = new ArrayList<Task>();
+        tasks = new ArrayList<>();
 
         String statementQuery = selectTasksQuery.prepareQuery();
 
@@ -46,7 +49,9 @@ public class DashboardController {
                 int userId = rs.getInt("TSK_USR_ID");
                 String taskName = rs.getString("TSK_NAME");
                 String taskDescription = rs.getString("TSK_DESCRIPTION");
-                Date taskDueDate = rs.getDate("TSK_DUE_DATE");
+                LocalDate taskDueDate = rs.getDate("TSK_DUE_DATE").toLocalDate();
+
+                System.out.println(taskDueDate);
 
                 Task task = new Task(taskId,userId,taskName,taskDescription,taskDueDate);
                 tasks.add(task);

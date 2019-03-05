@@ -1,4 +1,5 @@
 package com.lukebu.workmt.tasks;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -8,9 +9,16 @@ public class Task {
     private int userId;
     private String taskName;
     private String taskDescription;
-    private Date taskDueDate;
+    private LocalDate taskDueDate;
 
-    public Task(int taskId, int userId, String taskName, String taskDescription, Date taskDueDate) {
+    public Task(int userId, String taskName, String taskDescription, LocalDate taskDueDate) {
+        this.userId = userId;
+        this.taskName = taskName;
+        this.taskDescription = taskDescription;
+        this.taskDueDate = taskDueDate;
+    }
+
+    public Task(int taskId, int userId, String taskName, String taskDescription, LocalDate taskDueDate) {
         this.taskId = taskId;
         this.userId = userId;
         this.taskName = taskName;
@@ -34,11 +42,11 @@ public class Task {
         this.taskDescription = taskDescription;
     }
 
-    public Date getTaskDueDate() {
+    public LocalDate getTaskDueDate() {
         return taskDueDate;
     }
 
-    public void setTaskDueDate(Date taskDueDate) {
+    public void setTaskDueDate(LocalDate taskDueDate) {
         this.taskDueDate = taskDueDate;
     }
 

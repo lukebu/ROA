@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+
+<?import javafx.scene.layout.GridPane?>
+<DialogPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.lukebu.workmt.tasks.AddTaskController">
+
+    <headerText>
+        Prosimy o wypełnienie danych nowego zadania!
+    </headerText>
+    <content>
+        <GridPane vgap="10" hgap="10" >
+            <Label text="Nazwa zadania" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="taskNameTF" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <Label text="Opis zadania" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextArea fx:id="taskDescriptionTA" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <Label text="Data końcowa zadania" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <DatePicker fx:id="taskDueDateDP" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        </GridPane>
+    </content>
+</DialogPane>

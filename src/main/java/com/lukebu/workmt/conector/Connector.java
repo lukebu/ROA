@@ -35,16 +35,16 @@ public class Connector {
     }
 
     public int insertUpdateStatement(final String updateQuery) {
-        int rs = 0;
+        int result = 0;
 
         try {
             stmt = c.createStatement();
-            rs = stmt.executeUpdate(updateQuery);
+            result = stmt.executeUpdate(updateQuery);
         } catch (Exception e) {
             System.out.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        return rs;
+        return result;
     }
 
 

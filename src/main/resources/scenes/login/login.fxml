@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.text.Font?>
 <?import javafx.geometry.Insets?>
-<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+<BorderPane fx:id="mainBorderPane" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.lukebu.workmt.login.LoginController" >
 
     <top>
@@ -58,18 +58,4 @@
             </Button>
         </GridPane>
     </center>
-    <bottom>
-        <VBox alignment="BOTTOM_CENTER">
-        <Label textFill="darkblue" text="© 2019 Open Games Group" >
-            <font>
-                <Font name="Arial bold" size="9"/>
-            </font>
-        </Label>
-        <Label textFill="darkblue" text="All copyrights and trademarks are the property of their respective owners." >
-            <font>
-                <Font name="Arial bold" size="9"/>
-            </font>
-        </Label>
-        </VBox>
-    </bottom>
 </BorderPane>

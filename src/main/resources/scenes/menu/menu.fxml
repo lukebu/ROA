@@ -1,25 +1,21 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuItem?>
-<MenuBar>
+
+<MenuBar fx:controller="com.lukebu.workmt.menu.MenuController" xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml ">
     <Menu text="Plik">
-        <items>
-            <MenuItem text="Zakończ" />
-        </items>
+        <MenuItem text="Zakończ"/>
     </Menu>
     <Menu text="Zadania">
-        <items>
-            <MenuItem text="Lista zadań" />
-            <MenuItem text="Dodaj zadanie"/>
-            <MenuItem text="Modyfikuj zadanie"/>
-        </items>
+        <MenuItem text="Lista zadań"/>
+        <MenuItem text="Dodaj zadanie" onAction="#showAddTaskDialog"/>
+        <MenuItem text="Modyfikuj zadanie"/>
     </Menu>
     <Menu text="Kontakty">
-        <items>
-            <MenuItem text="Lista kontaktów" />
-            <MenuItem text="Dodaj kontakt" />
-            <MenuItem text="Modyfikuj kontakt" />
-        </items>
+        <MenuItem text="Lista kontaktów"/>
+        <MenuItem text="Dodaj kontakt"/>
+        <MenuItem text="Modyfikuj kontakt"/>
     </Menu>
     <Menu text="O nas">
         <MenuItem text="about"/>
