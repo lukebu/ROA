@@ -9,8 +9,6 @@ import java.time.format.DateTimeFormatter;
 
 public class InsertNewTask {
 
-    private Task task;
-
     public String prepareQuery(String taskName, String taskDescription, LocalDate taskDueDate) {
 
         DateTimeFormatter readFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss.SSS");

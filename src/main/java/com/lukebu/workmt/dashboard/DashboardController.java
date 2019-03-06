@@ -1,8 +1,10 @@
 package com.lukebu.workmt.dashboard;
 
 import com.lukebu.workmt.conector.Connector;
+import com.lukebu.workmt.context.ClientContext;
 import com.lukebu.workmt.footer.FooterController;
 import com.lukebu.workmt.menu.MenuController;
+import com.lukebu.workmt.query.DeleteTask;
 import com.lukebu.workmt.query.SelectTasksQuery;
 import com.lukebu.workmt.tasks.Task;
 import com.lukebu.workmt.tasks.TaskData;
@@ -14,6 +16,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -28,13 +32,12 @@ public class DashboardController {
     private TextArea toDoItemTextAreaDetails;
     @FXML
     private Label dueDateLabel;
-    @FXML
-    private MenuController menuController;
-    @FXML
-    private FooterController footerController;
+
+    int result;
 
     private Connector connector = new Connector();
     private SelectTasksQuery selectTasksQuery = new SelectTasksQuery();
+    private DeleteTask deleteTask = new DeleteTask();
 
     public void initialize() throws SQLException{
 
@@ -76,5 +79,18 @@ public class DashboardController {
         toDoItemListView.setItems(TaskData.getInstance().getTaskList());
         toDoItemListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         toDoItemListView.getSelectionModel().selectFirst();
+    }
+
+    public void deleteTask() {
+        connector.createConnectionToDb();
+        Task task = toDoItemListView.getSelectionModel().getSelectedItem();
+        result = connector.insertUpdateStatement(deleteTask.prepareQuery(task.getTaskId()));
+
+        if (result == 1) {
+            connector.closeConnectionWithCommit();
+            TaskData.getInstance().removeFromTaskList(task);
+        } else {
+            connector.closeConnectionWithCommit();
+        }
     }
 }
