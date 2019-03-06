@@ -58,4 +58,7 @@
             </Button>
         </GridPane>
     </center>
+    <bottom>
+        <fx:include fx:id="footer" source="/scenes/footer/footer.fxml"/>
+    </bottom>
 </BorderPane>

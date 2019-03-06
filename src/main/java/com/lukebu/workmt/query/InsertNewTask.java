@@ -1,11 +1,15 @@
 package com.lukebu.workmt.query;
 import com.lukebu.workmt.context.ClientContext;
+import com.lukebu.workmt.tasks.Task;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class InsertNewTask {
+
+    private Task task;
 
     public String prepareQuery(String taskName, String taskDescription, LocalDate taskDueDate) {
 
@@ -30,6 +34,8 @@ public class InsertNewTask {
         sb.append("')");
 
         result = sb.toString();
+
         return result;
     }
 }
+

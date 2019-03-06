@@ -3,6 +3,7 @@ package com.lukebu.workmt.login;
 import com.lukebu.workmt.Main;
 import com.lukebu.workmt.conector.Connector;
 import com.lukebu.workmt.context.ClientContext;
+import com.lukebu.workmt.footer.FooterController;
 import com.lukebu.workmt.query.LoginQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,6 +31,8 @@ public class LoginController {
     private Button logInButton;
     @FXML
     private Label errorMsgLabel;
+    @FXML
+    private FooterController footerController;
 
     private Connector connector = new Connector();
     private LoginQuery loginQuery = new LoginQuery();

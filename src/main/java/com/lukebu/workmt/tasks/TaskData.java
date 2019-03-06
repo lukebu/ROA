@@ -1,23 +1,25 @@
 package com.lukebu.workmt.tasks;
 
-import java.util.ArrayList;
-import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class TaskData {
 
-    private List<Task> tasks = new ArrayList<>();
+    private ObservableList<Task> tasks = FXCollections.observableArrayList();
 
-    private static TaskData instance;
+    private static TaskData instance = new TaskData();
 
     public static TaskData getInstance() {
         return instance;
     }
 
-    public List<Task> getTaskList() {
+    public ObservableList<Task> getTaskList() {
         return tasks;
     }
 
     public void addTaskToList(Task task) {
         instance.tasks.add(task);
     }
+
+
 }

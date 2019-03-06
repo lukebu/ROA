@@ -1,28 +1,26 @@
 package com.lukebu.workmt.dashboard;
 
 import com.lukebu.workmt.conector.Connector;
+import com.lukebu.workmt.footer.FooterController;
+import com.lukebu.workmt.menu.MenuController;
 import com.lukebu.workmt.query.SelectTasksQuery;
 import com.lukebu.workmt.tasks.Task;
+import com.lukebu.workmt.tasks.TaskData;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
-
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
 
 public class DashboardController {
 
-    private List<Task> tasks;
+    private ObservableList<Task> tasks;
 
     @FXML
     private ListView<Task> toDoItemListView;
@@ -30,13 +28,18 @@ public class DashboardController {
     private TextArea toDoItemTextAreaDetails;
     @FXML
     private Label dueDateLabel;
+    @FXML
+    private MenuController menuController;
+    @FXML
+    private FooterController footerController;
 
     private Connector connector = new Connector();
     private SelectTasksQuery selectTasksQuery = new SelectTasksQuery();
 
-    public void initialize() throws SQLException {
+    public void initialize() throws SQLException{
+
+        tasks = TaskData.getInstance().getTaskList();
         ResultSet rs = null;
-        tasks = new ArrayList<>();
 
         String statementQuery = selectTasksQuery.prepareQuery();
 
@@ -50,8 +53,6 @@ public class DashboardController {
                 String taskName = rs.getString("TSK_NAME");
                 String taskDescription = rs.getString("TSK_DESCRIPTION");
                 LocalDate taskDueDate = rs.getDate("TSK_DUE_DATE").toLocalDate();
-
-                System.out.println(taskDueDate);
 
                 Task task = new Task(taskId,userId,taskName,taskDescription,taskDueDate);
                 tasks.add(task);
@@ -68,12 +69,11 @@ public class DashboardController {
                 if (newValue != null) {
                     Task item = toDoItemListView.getSelectionModel().getSelectedItem();
                     toDoItemTextAreaDetails.setText(item.getTaskDescription());
-                    //DateTimeFormatter df = DateTimeFormatter.ISO_LOCAL_DATE;
                     dueDateLabel.setText(item.getTaskDueDate().toString());
             }
         };
         });
-        toDoItemListView.getItems().setAll(tasks);
+        toDoItemListView.setItems(TaskData.getInstance().getTaskList());
         toDoItemListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         toDoItemListView.getSelectionModel().selectFirst();
     }

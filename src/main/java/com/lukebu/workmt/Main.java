@@ -41,7 +41,6 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.initStyle(StageStyle.UTILITY);
         primaryStage.show();
-        showFooter();
     }
 
     public void showDashboardScene() throws IOException {
@@ -49,21 +48,6 @@ public class Main extends Application {
         dashboardLoader.setLocation(getClass().getResource("/scenes/dashboard/dashboard.fxml"));
         mainBorderPane = dashboardLoader.load();
         primaryStage.getScene().setRoot(mainBorderPane);
-        showMenu();
-        showFooter();
-        //primaryStage.setMaximized(true);
-    }
-
-    private void showMenu() throws IOException {
-        FXMLLoader menuLoader = new FXMLLoader();
-        menuLoader.setLocation(getClass().getResource("/scenes/menu/menu.fxml"));
-        mainBorderPane.setTop(menuLoader.load());
-    }
-
-    private void showFooter() throws IOException {
-        FXMLLoader footerLoader = new FXMLLoader();
-        footerLoader.setLocation(getClass().getResource("/scenes/footer/footer.fxml"));
-        mainBorderPane.setBottom(footerLoader.load());
     }
 
     public static void main(String[] args) {

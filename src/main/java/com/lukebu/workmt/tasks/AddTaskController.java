@@ -5,19 +5,15 @@ import com.lukebu.workmt.context.ClientContext;
 import com.lukebu.workmt.query.InsertNewTask;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class AddTaskController {
     @FXML
     private TextField taskNameTF;
     @FXML
-    private javafx.scene.control.TextArea taskDescriptionTA;
+    private TextArea taskDescriptionTA;
     @FXML
     private DatePicker taskDueDateDP;
 
@@ -34,10 +30,9 @@ public class AddTaskController {
         result = connector.insertUpdateStatement(stmt.prepareQuery(taskName, taskDescription, taskDueDate));
 
         if (result == 1) {
-            System.out.println("Udało się");
             connector.closeConnectionWithCommit();
+            TaskData.getInstance().addTaskToList(new Task(ClientContext.getInstance().getUserId(),taskName,taskDescription,taskDueDate));
         } else {
-            System.out.println("Nie udąło się");
             connector.closeConnectionWithCommit();
         }
     }
