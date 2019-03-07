@@ -1,4 +1,4 @@
-package com.lukebu.workmt.query;
+package com.lukebu.workmt.query.task;
 
 public class DeleteTask {
 

@@ -1,17 +1,17 @@
 package com.lukebu.workmt.tasks;
 
 import com.lukebu.workmt.conector.Connector;
-import com.lukebu.workmt.context.ClientContext;
-import com.lukebu.workmt.query.task.DeleteTask;
 import com.lukebu.workmt.query.task.InsertNewTask;
 import com.lukebu.workmt.query.task.ModifyTask;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+
 import java.time.LocalDate;
 
-public class AddTaskController {
+public class ModifyTaskController {
+
     @FXML
     private TextField taskNameTF;
     @FXML
@@ -20,22 +20,34 @@ public class AddTaskController {
     private DatePicker taskDueDateDP;
 
     private Connector connector = new Connector();
-    private InsertNewTask insertNewTask = new InsertNewTask();
+    private ModifyTask modifyTask = new ModifyTask();
+
     private int result;
 
-    public void addTask() {
+    public void modifyTask(int index, int taskId) {
+        Task task = TaskData.getInstance().getTaskByIndex(index);
+
         String taskName = taskNameTF.getText().trim();
         String taskDescription = taskDescriptionTA.getText().trim();
         LocalDate taskDueDate = taskDueDateDP.getValue();
 
         connector.createConnectionToDb();
-        result = connector.insertUpdateStatement(insertNewTask.prepareQuery(taskName, taskDescription, taskDueDate));
+        result = connector.insertUpdateStatement(modifyTask.prepareQuery(taskId,taskName, taskDescription, taskDueDate));
 
         if (result == 1) {
             connector.closeConnectionWithCommit();
-            TaskData.getInstance().addTaskToList(new Task(ClientContext.getInstance().getUserId(),taskName,taskDescription,taskDueDate));
+            TaskData.getInstance().modifyTaskList(index, new Task(taskId,taskName,taskDescription,taskDueDate));
         } else {
             connector.closeConnectionWithCommit();
         }
+    }
+
+
+    public void fillModifyForm(int index, int taskId){
+        Task task = TaskData.getInstance().getTaskByIndex(index);
+
+        taskNameTF.setText(task.getTaskName());
+        taskDescriptionTA.setText(task.getTaskDescription());
+        taskDueDateDP.setValue(task.getTaskDueDate());
     }
 }

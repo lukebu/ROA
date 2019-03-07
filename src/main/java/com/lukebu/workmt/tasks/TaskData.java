@@ -25,5 +25,11 @@ public class TaskData {
         instance.tasks.remove(task);
     }
 
+    public void modifyTaskList( int index, Task task) {
+        instance.tasks.set(index,task);
+    }
 
+    public Task getTaskByIndex (int index) {
+        return instance.tasks.get(index);
+    }
 }

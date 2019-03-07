@@ -4,7 +4,7 @@ import com.lukebu.workmt.Main;
 import com.lukebu.workmt.conector.Connector;
 import com.lukebu.workmt.context.ClientContext;
 import com.lukebu.workmt.footer.FooterController;
-import com.lukebu.workmt.query.LoginQuery;
+import com.lukebu.workmt.query.task.LoginQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

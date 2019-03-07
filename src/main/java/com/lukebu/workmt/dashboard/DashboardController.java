@@ -1,26 +1,25 @@
 package com.lukebu.workmt.dashboard;
 
+import com.lukebu.workmt.Main;
 import com.lukebu.workmt.conector.Connector;
-import com.lukebu.workmt.context.ClientContext;
-import com.lukebu.workmt.footer.FooterController;
-import com.lukebu.workmt.menu.MenuController;
-import com.lukebu.workmt.query.DeleteTask;
-import com.lukebu.workmt.query.SelectTasksQuery;
+import com.lukebu.workmt.query.task.DeleteTask;
+import com.lukebu.workmt.query.task.SelectTasksQuery;
+import com.lukebu.workmt.tasks.AddTaskController;
+import com.lukebu.workmt.tasks.ModifyTaskController;
 import com.lukebu.workmt.tasks.Task;
 import com.lukebu.workmt.tasks.TaskData;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextArea;
-import org.omg.CORBA.PUBLIC_MEMBER;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.*;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class DashboardController {
 
@@ -32,6 +31,8 @@ public class DashboardController {
     private TextArea toDoItemTextAreaDetails;
     @FXML
     private Label dueDateLabel;
+    @FXML
+    private AddTaskController addTaskController;
 
     int result;
 
@@ -80,7 +81,7 @@ public class DashboardController {
         toDoItemListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         toDoItemListView.getSelectionModel().selectFirst();
     }
-
+    @FXML
     public void deleteTask() {
         connector.createConnectionToDb();
         Task task = toDoItemListView.getSelectionModel().getSelectedItem();
@@ -91,6 +92,39 @@ public class DashboardController {
             TaskData.getInstance().removeFromTaskList(task);
         } else {
             connector.closeConnectionWithCommit();
+        }
+    }
+
+    @FXML
+    public void showModifyTaskDialog() {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initOwner(Main.getInstance().mainBorderPane.getScene().getWindow());
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/scenes/task/modifyTask.fxml"));
+
+        try {
+            dialog.getDialogPane().setContent(loader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Nie udało sie wyświetlić panelu modyfikacji zadania prosimy spróbować później");
+            e.printStackTrace();
+            return;
+        }
+
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+
+        Task task = toDoItemListView.getSelectionModel().getSelectedItem();
+        ModifyTaskController controller = loader.getController();
+        controller.fillModifyForm(tasks.indexOf(task), task.getTaskId());
+
+        Optional<ButtonType> result = dialog.showAndWait();
+
+        if(result.isPresent() && result.get().equals(ButtonType.OK)) {
+            controller.modifyTask(tasks.indexOf(task), task.getTaskId());
+            System.out.println("OK, pressed");
+        } else {
+            System.out.println("CANCEL, pressed");
         }
     }
 }

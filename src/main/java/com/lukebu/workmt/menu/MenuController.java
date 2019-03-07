@@ -32,7 +32,7 @@ public class MenuController {
 
         if(result.isPresent() && result.get().equals(ButtonType.OK)) {
             AddTaskController controller = loader.getController();
-            controller.processResult();
+            controller.addTask();
 
             System.out.println("OK, pressed");
         } else {
