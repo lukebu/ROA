@@ -17,7 +17,6 @@
             <TextArea fx:id="taskDescriptionTA" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
             <Label text="Data końcowa zadania" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
             <DatePicker fx:id="taskDueDateDP" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
         </GridPane>
     </content>
 </DialogPane>

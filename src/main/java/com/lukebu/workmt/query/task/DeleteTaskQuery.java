@@ -1,6 +1,6 @@
 package com.lukebu.workmt.query.task;
 
-public class DeleteTask {
+public class DeleteTaskQuery {
 
     public String prepareQuery(int taskId) {
 

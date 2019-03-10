@@ -12,11 +12,11 @@
         <fx:include fx:id="mainMenu" source="/scenes/menu/menu.fxml"/>
     </top>
     <left>
-    <ListView fx:id="toDoItemListView"/>
+    <ListView fx:id="taskListView"/>
     </left>
     <center>
         <VBox style="-fx-background-color: white">
-        <TextArea fx:id="toDoItemTextAreaDetails" VBox.vgrow="ALWAYS"/>
+        <TextArea fx:id="taskAreaDetails" VBox.vgrow="ALWAYS"/>
             <HBox>
                 <Label text="Due: ">
                     <font>

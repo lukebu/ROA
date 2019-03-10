@@ -21,8 +21,8 @@ public class TaskData {
         instance.tasks.add(task);
     }
 
-    public void removeFromTaskList(Task task) {
-        instance.tasks.remove(task);
+    public void removeFromTaskList(int index) {
+        instance.tasks.remove(tasks.get(index));
     }
 
     public void modifyTaskList( int index, Task task) {

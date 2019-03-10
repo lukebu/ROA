@@ -2,13 +2,15 @@ package com.lukebu.workmt.tasks;
 
 import com.lukebu.workmt.conector.Connector;
 import com.lukebu.workmt.context.ClientContext;
-import com.lukebu.workmt.query.task.DeleteTask;
+import com.lukebu.workmt.dashboard.DashboardController;
 import com.lukebu.workmt.query.task.InsertNewTask;
-import com.lukebu.workmt.query.task.ModifyTask;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class AddTaskController {
@@ -23,7 +25,7 @@ public class AddTaskController {
     private InsertNewTask insertNewTask = new InsertNewTask();
     private int result;
 
-    public void addTask() {
+    public void addTask() throws SQLException {
         String taskName = taskNameTF.getText().trim();
         String taskDescription = taskDescriptionTA.getText().trim();
         LocalDate taskDueDate = taskDueDateDP.getValue();
