@@ -35,7 +35,9 @@ public class DashboardController {
     private TaskDataProcessing taskDataProcessing = new TaskDataProcessing();
 
     @FXML
-    public void initialize() throws SQLException {
+    public void initialize() throws SQLException, IOException {
+
+
         taskDataProcessing.loadTaskListFormDB();
         tasks = TaskData.getInstance().getTaskList();
         findListChange();
@@ -47,13 +49,10 @@ public class DashboardController {
 
     @FXML
      public void refreshView() throws SQLException, IOException {
-        loader.setLocation(getClass().getResource("/scenes/dashboard/dashboard.fxml"));
-        loader.load();
-        DashboardController dashboardController = loader.getController();
-        tasks.setAll(taskDataProcessing.getTaskListAfterOperations());
-        dashboardController.findListChange();
-        dashboardController.taskListView.setItems(tasks);
-        dashboardController.taskListView.getSelectionModel().selectFirst();
+        tasks = TaskData.getInstance().getTaskList();
+        findListChange();
+        taskListView.setItems(tasks);
+        taskListView.getSelectionModel().selectFirst();
     }
 
     @FXML
@@ -65,7 +64,7 @@ public class DashboardController {
                     Task item = taskListView.getSelectionModel().getSelectedItem();
                     taskAreaDetails.setText(item.getTaskDescription());
                     dueDateLabel.setText(item.getTaskDueDate().toString());
-                    taskListView.getSelectionModel().select(item);
+                    selectCustomTask(item);
                     disableFormData();
                 }
             };

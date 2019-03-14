@@ -21,8 +21,7 @@ public class AddTaskController {
 
     private TaskDataProcessing taskDataProcessing = new TaskDataProcessing();
 
-    @FXML
-    private FXMLLoader fxmlLoader = new FXMLLoader();
+
 
     @FXML
     public void showAddTaskDialog()throws IOException, SQLException {
@@ -47,7 +46,7 @@ public class AddTaskController {
         if(result.isPresent() && result.get().equals(ButtonType.OK)) {
             AddTaskController controller = loader.getController();
             controller.addTaskToList();
-
+            FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/scenes/dashboard/dashboard.fxml"));
             fxmlLoader.load();
             DashboardController dashboardController = fxmlLoader.getController();
