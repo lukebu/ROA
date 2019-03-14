@@ -1,28 +1,23 @@
 package com.lukebu.workmt.dashboard;
 
 import com.lukebu.workmt.Main;
-import com.lukebu.workmt.conector.Connector;
-import com.lukebu.workmt.query.task.DeleteTaskQuery;
-import com.lukebu.workmt.query.task.SelectTasksQuery;
-import com.lukebu.workmt.tasks.ModifyTaskController;
-import com.lukebu.workmt.tasks.Task;
-import com.lukebu.workmt.tasks.TaskData;
+import com.lukebu.workmt.tasks.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.Optional;
 
 public class DashboardController {
 
-    private ObservableList<Task> tasks;
+    private ObservableList<Task> tasks = FXCollections.observableArrayList();
+
+    private FXMLLoader loader = new FXMLLoader();
 
     @FXML
     private ListView<Task> taskListView;
@@ -30,101 +25,38 @@ public class DashboardController {
     private TextArea taskAreaDetails;
     @FXML
     private Label dueDateLabel;
+    @FXML
+    private Label dueDateLabelText;
+    @FXML
+    private Button deleteTaskButton;
+    @FXML
+    private Button modifyTaskButton;
 
-    private int result;
+    private TaskDataProcessing taskDataProcessing = new TaskDataProcessing();
 
-    private Connector connector = new Connector();
-    private SelectTasksQuery selectTasksQuery = new SelectTasksQuery();
-    private DeleteTaskQuery deleteTaskQuery = new DeleteTaskQuery();
-
+    @FXML
     public void initialize() throws SQLException {
-        refreshView();
-    }
-
-    @FXML
-    public void deleteTask()throws SQLException {
-        connector.createConnectionToDb();
-        Task task = taskListView.getSelectionModel().getSelectedItem();
-        result = connector.insertUpdateStatement(deleteTaskQuery.prepareQuery(task.getTaskId()));
-        if (result == 1) {
-            connector.closeConnectionWithCommit();
-            TaskData.getInstance().removeFromTaskList(tasks.indexOf(task));
-        } else {
-            connector.closeConnectionWithCommit();
-        }
-        refreshView();
-    }
-
-    @FXML
-    public void showModifyTaskDialog() throws SQLException{
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.initOwner(Main.getInstance().mainBorderPane.getScene().getWindow());
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/scenes/task/modifyTask.fxml"));
-
-        try {
-            dialog.getDialogPane().setContent(loader.load());
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Nie udało sie wyświetlić panelu modyfikacji zadania prosimy spróbować później");
-            e.printStackTrace();
-            return;
-        }
-
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
-
-        Task task = taskListView.getSelectionModel().getSelectedItem();
-        ModifyTaskController controller = loader.getController();
-        controller.fillModifyForm(tasks.indexOf(task), task.getTaskId());
-
-        Optional<ButtonType> result = dialog.showAndWait();
-
-        if(result.isPresent() && result.get().equals(ButtonType.OK)) {
-            controller.modifyTask(tasks.indexOf(task), task.getTaskId());
-            System.out.println("OK, pressed");
-            refreshView();
-        } else {
-            System.out.println("CANCEL, pressed");
-        }
-    }
-
-    private ObservableList<Task> loadTaskListFormDB() throws SQLException {
+        taskDataProcessing.loadTaskListFormDB();
         tasks = TaskData.getInstance().getTaskList();
-        tasks.clear();
-        ResultSet rs = null;
-
-        String statementQuery = selectTasksQuery.prepareQuery();
-
-        connector.createConnectionToDb();
-        rs = connector.insertQueryStatement(statementQuery);
-
-        while (rs.next()) {
-            if (rs.getInt("TSK_ID") != 0 && rs.getInt("TSK_USR_ID") != 0) {
-                int taskId = rs.getInt("TSK_ID");
-                int userId = rs.getInt("TSK_USR_ID");
-                String taskName = rs.getString("TSK_NAME");
-                String taskDescription = rs.getString("TSK_DESCRIPTION");
-                LocalDate taskDueDate = rs.getDate("TSK_DUE_DATE").toLocalDate();
-
-                Task task = new Task(taskId, userId, taskName, taskDescription, taskDueDate);
-                tasks.add(task);
-            }
-        }
-        connector.closeConnectionWithCommit();
-        return tasks;
-    }
-
-     public void refreshView() throws SQLException {
-        taskListView.refresh();
         findListChange();
-        ObservableList<Task> taskObservableList = loadTaskListFormDB();
-
-        taskListView.setItems(taskObservableList);
+        taskListView.setItems(tasks);
         taskListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-         taskListView.getSelectionModel().selectFirst();
+        taskListView.getSelectionModel().selectFirst();
+        disableFormData();
     }
 
+    @FXML
+     public void refreshView() throws SQLException, IOException {
+        loader.setLocation(getClass().getResource("/scenes/dashboard/dashboard.fxml"));
+        loader.load();
+        DashboardController dashboardController = loader.getController();
+        tasks.setAll(taskDataProcessing.getTaskListAfterOperations());
+        dashboardController.findListChange();
+        dashboardController.taskListView.setItems(tasks);
+        dashboardController.taskListView.getSelectionModel().selectFirst();
+    }
+
+    @FXML
     private void findListChange() {
         taskListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Task>() {
             @Override
@@ -134,8 +66,52 @@ public class DashboardController {
                     taskAreaDetails.setText(item.getTaskDescription());
                     dueDateLabel.setText(item.getTaskDueDate().toString());
                     taskListView.getSelectionModel().select(item);
+                    disableFormData();
                 }
             };
         });
+    }
+
+    @FXML
+    private void disableFormData() {
+        if (taskListView.getSelectionModel().isEmpty()){
+            taskAreaDetails.clear();
+            dueDateLabel.setText("");
+            dueDateLabelText.setText("");
+            modifyTaskButton.setDisable(true);
+            deleteTaskButton.setDisable(true);
+        } else {
+            modifyTaskButton.setDisable(false);
+            deleteTaskButton.setDisable(false);
+        }
+    }
+
+    @FXML
+    public void selectFirstItem() {
+        taskListView.getSelectionModel().selectFirst();
+    }
+
+    @FXML
+    public void selectCustomTask(Task task) {
+        taskListView.getSelectionModel().select(task);
+    }
+
+    @FXML
+    public void showModifyDialog() throws IOException, SQLException {
+
+        ModifyTaskController modifyTaskController = new ModifyTaskController();
+        modifyTaskController.showModifyTaskDialog(taskListView.getSelectionModel().getSelectedItem());
+    }
+
+    @FXML
+    private void deleteTaskFromList() throws SQLException, IOException {
+        Task task = taskListView.getSelectionModel().getSelectedItem();
+        taskDataProcessing.deleteTask(tasks, task);
+        disableFormData();
+    }
+
+    public FXMLLoader loadDashboard() throws IOException {
+        loader.setLocation(getClass().getResource("/scenes/dashboard/dashboard.fxml"));
+        return loader;
     }
 }

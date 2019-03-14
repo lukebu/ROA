@@ -1,14 +1,16 @@
 package com.lukebu.workmt.tasks;
 
-import com.lukebu.workmt.conector.Connector;
-import com.lukebu.workmt.query.task.InsertNewTask;
-import com.lukebu.workmt.query.task.ModifyTask;
+import com.lukebu.workmt.Main;
+import com.lukebu.workmt.dashboard.DashboardController;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.*;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class ModifyTaskController {
 
@@ -19,31 +21,50 @@ public class ModifyTaskController {
     @FXML
     private DatePicker taskDueDateDP;
 
-    private Connector connector = new Connector();
-    private ModifyTask modifyTask = new ModifyTask();
+    private TaskDataProcessing taskDataProcessing = new TaskDataProcessing();
 
-    private int result;
+    @FXML
+    public void showModifyTaskDialog(Task task) throws SQLException, IOException {
+        FXMLLoader loader = new FXMLLoader();
+        ObservableList<Task> taskObservableList = TaskData.getInstance().getTaskList();
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initOwner(Main.getInstance().mainBorderPane.getScene().getWindow());
+        loader.setLocation(getClass().getResource("/scenes/task/modifyTask.fxml"));
 
-    public void modifyTask(int index, int taskId) {
-        Task task = TaskData.getInstance().getTaskByIndex(index);
+        try {
+            dialog.getDialogPane().setContent(loader.load());
 
-        String taskName = taskNameTF.getText().trim();
-        String taskDescription = taskDescriptionTA.getText().trim();
-        LocalDate taskDueDate = taskDueDateDP.getValue();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Nie udało sie wyświetlić panelu modyfikacji zadania prosimy spróbować później");
+            e.printStackTrace();
+            return;
+        }
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
 
-        connector.createConnectionToDb();
-        result = connector.insertUpdateStatement(modifyTask.prepareQuery(taskId,taskName, taskDescription, taskDueDate));
+        ModifyTaskController modifyTaskController = loader.getController();
+        modifyTaskController.fillModifyForm(taskObservableList.indexOf(task));
 
-        if (result == 1) {
-            connector.closeConnectionWithCommit();
-            TaskData.getInstance().modifyTaskList(index, new Task(taskId,taskName,taskDescription,taskDueDate));
+        Optional<ButtonType> result = dialog.showAndWait();
+
+        if(result.isPresent() && result.get().equals(ButtonType.OK)) {
+            modifyTaskController.modifyTaskOnList(taskObservableList.indexOf(task), task.getTaskId());
+            DashboardController dashboardController = new DashboardController();
+            dashboardController.refreshView();
         } else {
-            connector.closeConnectionWithCommit();
         }
     }
 
+    private void modifyTaskOnList(int index, int taskId) throws SQLException {
+        String taskName = taskNameTF.getText().trim();
+        String taskDescription = taskDescriptionTA.getText().trim();
+        LocalDate taskEndDate = taskDueDateDP.getValue();
+        taskDataProcessing.modifyTask(index, taskId,taskName, taskDescription,taskEndDate);
+    }
 
-    public void fillModifyForm(int index, int taskId){
+    @FXML
+    public void fillModifyForm(int index){
         Task task = TaskData.getInstance().getTaskByIndex(index);
 
         taskNameTF.setText(task.getTaskName());

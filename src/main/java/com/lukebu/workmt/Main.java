@@ -1,5 +1,6 @@
 package com.lukebu.workmt;
 
+import com.lukebu.workmt.dashboard.DashboardController;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,9 +45,8 @@ public class Main extends Application {
     }
 
     public void showDashboardScene() throws IOException {
-        FXMLLoader dashboardLoader = new FXMLLoader();
-        dashboardLoader.setLocation(getClass().getResource("/scenes/dashboard/dashboard.fxml"));
-        mainBorderPane = dashboardLoader.load();
+        DashboardController dashboardController = new DashboardController();
+        mainBorderPane = dashboardController.loadDashboard().load();
         primaryStage.getScene().setRoot(mainBorderPane);
     }
 

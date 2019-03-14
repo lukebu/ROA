@@ -32,4 +32,8 @@ public class TaskData {
     public Task getTaskByIndex (int index) {
         return instance.tasks.get(index);
     }
+
+    public void refreshTaskList(ObservableList<Task> tasks) {
+        instance.tasks = tasks;
+    }
 }

@@ -18,7 +18,7 @@
         <VBox style="-fx-background-color: white">
         <TextArea fx:id="taskAreaDetails" VBox.vgrow="ALWAYS"/>
             <HBox>
-                <Label text="Due: ">
+                <Label fx:id="dueDateLabelText" text="Due: ">
                     <font>
                         <Font name="Times New Roman bold" size="20">
                         </Font>
@@ -30,8 +30,8 @@
                         </Font>
                     </font>
                 </Label>
-                <Button text="Usuń" onAction="#deleteTask"/>
-                <Button text="Modyfikuj" onAction="#showModifyTaskDialog"/>
+                <Button fx:id="deleteTaskButton" text="Usuń" onAction="#deleteTaskFromList"/>
+                <Button fx:id="modifyTaskButton" text="Modyfikuj" onAction="#showModifyDialog"/>
             </HBox>
         </VBox>
     </center>
