@@ -2,6 +2,7 @@ package com.lukebu.workmt.dashboard;
 
 import com.lukebu.workmt.Main;
 import com.lukebu.workmt.tasks.*;
+import com.sun.javafx.scene.control.skin.ComboBoxListViewSkin;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -35,43 +36,50 @@ public class DashboardController {
     private TaskDataProcessing taskDataProcessing = new TaskDataProcessing();
 
     @FXML
-    public void initialize() throws SQLException, IOException {
-
-
+    public void initialize() throws SQLException {
         taskDataProcessing.loadTaskListFormDB();
         tasks = TaskData.getInstance().getTaskList();
         findListChange();
         taskListView.setItems(tasks);
         taskListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         taskListView.getSelectionModel().selectFirst();
+        System.out.println(taskListView);
+        System.out.println(taskListView.getItems());
+        System.out.println(taskListView.getSelectionModel().getSelectionMode());
+        System.out.println(taskListView.getSelectionModel().getSelectedItems());
+        System.out.println(taskListView.getSelectionModel().toString());
+
         disableFormData();
     }
 
-    @FXML
-     public void refreshView() throws SQLException, IOException {
+     public void refreshView() {
         tasks = TaskData.getInstance().getTaskList();
         findListChange();
         taskListView.setItems(tasks);
-        taskListView.getSelectionModel().selectFirst();
+         taskListView.getSelectionModel().selectFirst();
+         System.out.println(taskListView);
+         System.out.println(taskListView.getItems());
+         System.out.println(taskListView.getSelectionModel().getSelectionMode());
+         System.out.println(taskListView.getSelectionModel().getSelectedItems());
+         System.out.println(taskListView.getSelectionModel().toString());
+
     }
 
-    @FXML
     private void findListChange() {
         taskListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Task>() {
             @Override
             public void changed(ObservableValue<? extends Task> observable, Task oldValue, Task newValue) {
                 if (newValue != null) {
                     Task item = taskListView.getSelectionModel().getSelectedItem();
+
                     taskAreaDetails.setText(item.getTaskDescription());
                     dueDateLabel.setText(item.getTaskDueDate().toString());
-                    selectCustomTask(item);
                     disableFormData();
                 }
             };
         });
     }
 
-    @FXML
     private void disableFormData() {
         if (taskListView.getSelectionModel().isEmpty()){
             taskAreaDetails.clear();
@@ -85,17 +93,14 @@ public class DashboardController {
         }
     }
 
-    @FXML
     public void selectFirstItem() {
         taskListView.getSelectionModel().selectFirst();
     }
 
-    @FXML
     public void selectCustomTask(Task task) {
         taskListView.getSelectionModel().select(task);
     }
 
-    @FXML
     public void showModifyDialog() throws IOException, SQLException {
 
         ModifyTaskController modifyTaskController = new ModifyTaskController();
