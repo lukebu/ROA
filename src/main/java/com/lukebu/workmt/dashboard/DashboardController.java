@@ -1,25 +1,40 @@
 package com.lukebu.workmt.dashboard;
 
 import com.lukebu.workmt.Main;
+import com.lukebu.workmt.WorkManagerToolUtil;
+import com.lukebu.workmt.alert.AlertMaker;
 import com.lukebu.workmt.tasks.*;
 import com.sun.javafx.scene.control.skin.ComboBoxListViewSkin;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class DashboardController {
+public class DashboardController implements Initializable {
 
     private ObservableList<Task> tasks = FXCollections.observableArrayList();
 
     private FXMLLoader loader = new FXMLLoader();
 
+    @FXML
+    private BorderPane rootPane;
     @FXML
     private ListView<Task> taskListView;
     @FXML
@@ -35,35 +50,31 @@ public class DashboardController {
 
     private TaskDataProcessing taskDataProcessing = new TaskDataProcessing();
 
-    @FXML
-    public void initialize() throws SQLException {
-        taskDataProcessing.loadTaskListFormDB();
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        try {
+            taskDataProcessing.loadTaskListFormDB();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         tasks = TaskData.getInstance().getTaskList();
         findListChange();
         taskListView.setItems(tasks);
         taskListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         taskListView.getSelectionModel().selectFirst();
-        System.out.println(taskListView);
-        System.out.println(taskListView.getItems());
-        System.out.println(taskListView.getSelectionModel().getSelectionMode());
-        System.out.println(taskListView.getSelectionModel().getSelectedItems());
-        System.out.println(taskListView.getSelectionModel().toString());
-
         disableFormData();
     }
 
-     public void refreshView() {
-        tasks = TaskData.getInstance().getTaskList();
-        findListChange();
-        taskListView.setItems(tasks);
-         taskListView.getSelectionModel().selectFirst();
-         System.out.println(taskListView);
-         System.out.println(taskListView.getItems());
-         System.out.println(taskListView.getSelectionModel().getSelectionMode());
-         System.out.println(taskListView.getSelectionModel().getSelectedItems());
-         System.out.println(taskListView.getSelectionModel().toString());
-
+    public Object getDashboardController () {
+        return WorkManagerToolUtil.loadWindow(getClass().getResource("/scenes/dashboard/dashboard.fxml"));
     }
+
+     public void refreshView() {
+        taskListView.getItems();
+        taskListView.getSelectionModel().selectLast();
+    }
+
 
     private void findListChange() {
         taskListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Task>() {
@@ -93,16 +104,7 @@ public class DashboardController {
         }
     }
 
-    public void selectFirstItem() {
-        taskListView.getSelectionModel().selectFirst();
-    }
-
-    public void selectCustomTask(Task task) {
-        taskListView.getSelectionModel().select(task);
-    }
-
     public void showModifyDialog() throws IOException, SQLException {
-
         ModifyTaskController modifyTaskController = new ModifyTaskController();
         modifyTaskController.showModifyTaskDialog(taskListView.getSelectionModel().getSelectedItem());
     }
@@ -112,10 +114,7 @@ public class DashboardController {
         Task task = taskListView.getSelectionModel().getSelectedItem();
         taskDataProcessing.deleteTask(tasks, task);
         disableFormData();
+        taskListView.getSelectionModel().selectLast();
     }
 
-    public FXMLLoader loadDashboard() throws IOException {
-        loader.setLocation(getClass().getResource("/scenes/dashboard/dashboard.fxml"));
-        return loader;
-    }
 }

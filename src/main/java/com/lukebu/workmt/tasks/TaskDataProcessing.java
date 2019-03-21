@@ -95,8 +95,6 @@ public class TaskDataProcessing {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/scenes/dashboard/dashboard.fxml"));
         fxmlLoader.load();
-        DashboardController dashboardController = fxmlLoader.getController();
-        dashboardController.refreshView();
     }
 
     public ObservableList<Task> getTaskListAfterOperations() {

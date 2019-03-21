@@ -28,7 +28,7 @@ public class ModifyTaskController {
         FXMLLoader loader = new FXMLLoader();
         ObservableList<Task> taskObservableList = TaskData.getInstance().getTaskList();
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.initOwner(Main.getInstance().mainBorderPane.getScene().getWindow());
+        //dialog.initOwner(Main.getInstance().mainBorderPane.getScene().getWindow());
         loader.setLocation(getClass().getResource("/scenes/task/modifyTask.fxml"));
 
         try {
@@ -50,7 +50,10 @@ public class ModifyTaskController {
 
         if(result.isPresent() && result.get().equals(ButtonType.OK)) {
             modifyTaskController.modifyTaskOnList(taskObservableList.indexOf(task), task.getTaskId());
-            DashboardController dashboardController = new DashboardController();
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/scenes/task/modifyTask.fxml"));
+            fxmlLoader.load();
+            DashboardController dashboardController = fxmlLoader.getController();
             dashboardController.refreshView();
         } else {
         }
