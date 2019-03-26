@@ -24,9 +24,6 @@ public class Main extends Application {
         primaryStage.setTitle("Work MT");
         primaryStage.initStyle(StageStyle.UTILITY);
         primaryStage.show();
-
-        new Thread(() -> {
-        }).start();
     }
 
     public static void main(String[] args) {

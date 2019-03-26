@@ -3,13 +3,10 @@
 <?import javafx.scene.control.*?>
 
 <?import javafx.scene.layout.GridPane?>
-<DialogPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.lukebu.workmt.tasks.ModifyTaskController">
+<?import javafx.scene.layout.StackPane?>
+<StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.lukebu.workmt.tasks.ModifyTaskController">
 
-    <headerText>
-        Prosimy o poprawienie wybranego zadania!
-    </headerText>
-    <content>
         <GridPane vgap="10" hgap="10" >
             <Label text="Nazwa zadania" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
             <TextField fx:id="taskNameTF" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
@@ -17,6 +14,8 @@
             <TextArea fx:id="taskDescriptionTA" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
             <Label text="Data końcowa zadania" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
             <DatePicker fx:id="taskDueDateDP" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            <Button text="Zatwierdź zmiany" fx:id="modifyTaskButton" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.columnSpan="4" onAction="#modifyTask"/>
+            <Button text="Anuluj" fx:id="cancelButton" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.columnSpan="4" onAction="#cancel"/>
+
         </GridPane>
-    </content>
-</DialogPane>
+</StackPane>

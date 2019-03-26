@@ -1,40 +1,29 @@
 package com.lukebu.workmt.dashboard;
 
-import com.lukebu.workmt.Main;
-import com.lukebu.workmt.WorkManagerToolUtil;
-import com.lukebu.workmt.alert.AlertMaker;
+import com.lukebu.workmt.ChangeSceneProcessor;
+import com.lukebu.workmt.events.EventProcessor;
+import com.lukebu.workmt.events.task.ModifyTaskEvent;
+import com.lukebu.workmt.events.task.NewTaskEvent;
+import com.lukebu.workmt.query.task.ModifyTask;
 import com.lukebu.workmt.tasks.*;
-import com.sun.javafx.scene.control.skin.ComboBoxListViewSkin;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DashboardController implements Initializable {
 
     private ObservableList<Task> tasks = FXCollections.observableArrayList();
 
-    private FXMLLoader loader = new FXMLLoader();
-
-    @FXML
-    private BorderPane rootPane;
     @FXML
     private ListView<Task> taskListView;
     @FXML
@@ -58,6 +47,12 @@ public class DashboardController implements Initializable {
             e.printStackTrace();
         }
 
+        EventProcessor.getInstance().registerListener( event -> {
+            if(event instanceof NewTaskEvent || event instanceof ModifyTaskEvent) {
+                refreshView();
+            }
+        });
+
         tasks = TaskData.getInstance().getTaskList();
         findListChange();
         taskListView.setItems(tasks);
@@ -66,15 +61,9 @@ public class DashboardController implements Initializable {
         disableFormData();
     }
 
-    public Object getDashboardController () {
-        return WorkManagerToolUtil.loadWindow(getClass().getResource("/scenes/dashboard/dashboard.fxml"));
-    }
-
-     public void refreshView() {
-        taskListView.getItems();
+     private void refreshView() {
         taskListView.getSelectionModel().selectLast();
     }
-
 
     private void findListChange() {
         taskListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Task>() {
@@ -82,7 +71,6 @@ public class DashboardController implements Initializable {
             public void changed(ObservableValue<? extends Task> observable, Task oldValue, Task newValue) {
                 if (newValue != null) {
                     Task item = taskListView.getSelectionModel().getSelectedItem();
-
                     taskAreaDetails.setText(item.getTaskDescription());
                     dueDateLabel.setText(item.getTaskDueDate().toString());
                     disableFormData();
@@ -104,9 +92,12 @@ public class DashboardController implements Initializable {
         }
     }
 
-    public void showModifyDialog() throws IOException, SQLException {
-        ModifyTaskController modifyTaskController = new ModifyTaskController();
-        modifyTaskController.showModifyTaskDialog(taskListView.getSelectionModel().getSelectedItem());
+    @FXML
+    private void handleModifyTaskOnList(ActionEvent event) {
+        Task task = taskListView.getSelectionModel().getSelectedItem();
+        ModifyTaskEvent modifyTaskEvent = new ModifyTaskEvent();
+        modifyTaskEvent.setTaskToModify(task);
+        ChangeSceneProcessor.changeScene(getClass().getResource("/scenes/task/modifyTask.fxml"), "Zmodyfikuj zadanie", null);
     }
 
     @FXML

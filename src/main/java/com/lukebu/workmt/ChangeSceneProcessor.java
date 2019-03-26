@@ -9,9 +9,9 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.net.URL;
 
-public class WorkManagerToolUtil {
+public class ChangeSceneProcessor {
 
-    public static Object loadNewWindow(URL loc, String title, Stage parentStage) {
+    public static Object changeScene(URL loc, String title, Stage parentStage) {
         Object controller = null;
         try {
             FXMLLoader loader = new FXMLLoader(loc);
@@ -32,16 +32,17 @@ public class WorkManagerToolUtil {
         return controller;
     }
 
-    public static Object loadWindow(URL loc) {
-        Object controller = null;
+    public static <T> T loadScene(String fxmlFile) {
         try {
-            FXMLLoader loader = new FXMLLoader(loc);
-            Parent parent = loader.load();
-            controller = loader.getController();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            URL location = ChangeSceneProcessor.class.getResource("/scenes/" + fxmlFile);
+            FXMLLoader loader = new FXMLLoader(location);
+            loader.load();
+            return loader.getController();
         }
-        return controller;
+        catch (IOException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
+        }
     }
 
 }

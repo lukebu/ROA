@@ -1,15 +1,12 @@
 package com.lukebu.workmt.tasks;
 
-import com.lukebu.workmt.WorkManagerToolUtil;
-import com.lukebu.workmt.dashboard.DashboardController;
+import com.lukebu.workmt.events.EventProcessor;
+import com.lukebu.workmt.events.task.NewTaskEvent;
 import javafx.fxml.FXML;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
@@ -28,16 +25,14 @@ public class AddTaskController {
     private TaskDataProcessing taskDataProcessing = new TaskDataProcessing();
 
     @FXML
-    private void addTaskToList() throws SQLException, IOException {
+    private void addTaskToList() throws SQLException {
         String taskName = taskNameTF.getText().trim();
         String taskDescription = taskDescriptionTA.getText().trim();
         LocalDate taskEndDate = taskDueDateDP.getValue();
         taskDataProcessing.addTask(taskName, taskDescription,taskEndDate);
         cancel();
 
-        DashboardController dashboardController = new DashboardController();
-        dashboardController.getDashboardController();
-        dashboardController.refreshView();
+        EventProcessor.getInstance().sendEvent(new NewTaskEvent());
     }
 
     @FXML
