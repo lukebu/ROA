@@ -1,0 +1,73 @@
+{
+    -fx-primary : #2A2E37;
+    -fx-secondary : #ff4648;
+    -fx-primarytext : #ffffff;
+    -fx-blue: #1976D2;
+}
+
+.glyph-icon
+{
+    -fx-fill: -fx-primarytext;
+}
+
+#rootPane {
+  -fx-background-color: linear-gradient(#0b4076, #142167);
+  -fx-text-fill: #f3f3f3;
+}
+
+.text-field
+{
+    -fx-font-size : 12pt;
+    -jfx-focus-color: -fx-secondary;
+    -fx-text-fill: derive(-fx-secondary, 20%);
+}
+
+.wrong-credentials
+{
+    -fx-text-fill: #ef5350;
+}
+
+@font-face {
+  font-family: Roboto-Thin;
+  src: url('/common/font/Roboto-Thin.ttf');
+}
+
+.whiteLabel {
+  -fx-text-fill: rgb(251, 249, 255);
+    -fx-font-family: 'Roboto-Medium';
+  -fx-font-weight: bold;
+}
+
+.button{
+    -fx-text-fill: -fx-primarytext;
+    -fx-background-color: -fx-primary;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-font-size: 12pt;
+}
+
+.button:hover, .button:focused{
+    -fx-border-color: -fx-secondary;
+    -fx-background-color: -fx-secondary;
+    -fx-text-fill: -fx-primary;
+}
+
+
+.dialog-button {
+    -fx-border-color: white;
+    -fx-text-fill: white;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-font-weight: bold;
+}
+
+.dialog-button:hover{
+    -fx-background-color: white;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-text-fill: black;
+}
+
+.glyph-icon {
+    -icons-color: white;
+}

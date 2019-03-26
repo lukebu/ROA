@@ -3,12 +3,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.text.Font?>
 <VBox alignment="BASELINE_CENTER" spacing="3" minHeight="40">
-    <Label textFill="darkblue" text="© 2019 Open Games Group" >
+    <Label styleClass="whiteLabel" text="© 2019 Open Games Group" >
         <font>
             <Font name="Arial bold" size="10"/>
         </font>
     </Label>
-    <Label textFill="darkblue" text="All copyrights and trademarks are the property of their respective owners." >
+    <Label styleClass="whiteLabel" text="All copyrights and trademarks are the property of their respective owners." >
         <font>
             <Font name="Arial bold" size="10"/>
         </font>

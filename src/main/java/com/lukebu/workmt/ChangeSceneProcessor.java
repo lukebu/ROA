@@ -3,6 +3,7 @@ package com.lukebu.workmt;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -10,6 +11,12 @@ import java.io.IOException;
 import java.net.URL;
 
 public class ChangeSceneProcessor {
+
+    private static final String ICON_IMAGE_LOC = "./common/images/wmt.png";
+
+    public static void setStageIcon(Stage stage) {
+        stage.getIcons().add(new Image(ICON_IMAGE_LOC));
+    }
 
     public static Object changeScene(URL loc, String title, Stage parentStage) {
         Object controller = null;
@@ -23,7 +30,9 @@ public class ChangeSceneProcessor {
             } else {
                 stage = new Stage(StageStyle.UTILITY);
             }
+
             stage.setTitle(title);
+            setStageIcon(stage);
             stage.setScene(new Scene(parent));
             stage.show();
         } catch (IOException ex) {

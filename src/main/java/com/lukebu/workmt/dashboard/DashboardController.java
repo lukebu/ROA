@@ -4,7 +4,6 @@ import com.lukebu.workmt.ChangeSceneProcessor;
 import com.lukebu.workmt.events.EventProcessor;
 import com.lukebu.workmt.events.task.ModifyTaskEvent;
 import com.lukebu.workmt.events.task.NewTaskEvent;
-import com.lukebu.workmt.query.task.ModifyTask;
 import com.lukebu.workmt.tasks.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -61,7 +60,7 @@ public class DashboardController implements Initializable {
         disableFormData();
     }
 
-     private void refreshView() {
+    private void refreshView() {
         taskListView.getSelectionModel().selectLast();
     }
 
@@ -107,5 +106,4 @@ public class DashboardController implements Initializable {
         disableFormData();
         taskListView.getSelectionModel().selectLast();
     }
-
 }

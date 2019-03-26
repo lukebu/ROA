@@ -4,9 +4,14 @@
 
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import java.net.URL?>
 <StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.lukebu.workmt.tasks.AddTaskController">
-        <GridPane vgap="10" hgap="10" >
+    <stylesheets>
+        <URL value="@../../common/css/application.css"/>
+    </stylesheets>
+
+    <GridPane vgap="10" hgap="10" >
             <Label text="Nazwa zadania" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
             <TextField fx:id="taskNameTF" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
             <Label text="Opis zadania" GridPane.rowIndex="1" GridPane.columnIndex="0"/>

@@ -22,7 +22,8 @@ public class Main extends Application {
         primaryStage.setMinWidth(SCENE_WIDTH_SMALL);
         primaryStage.setResizable(false);
         primaryStage.setTitle("Work MT");
-        primaryStage.initStyle(StageStyle.UTILITY);
+        primaryStage.initStyle(StageStyle.DECORATED);
+        ChangeSceneProcessor.setStageIcon(primaryStage);
         primaryStage.show();
     }
 

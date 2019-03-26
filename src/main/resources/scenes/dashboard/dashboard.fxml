@@ -7,7 +7,12 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.control.Button?>
+<?import java.net.URL?>
 <BorderPane fx:id="rootPane" fx:controller="com.lukebu.workmt.dashboard.DashboardController" xmlns:fx="http://javafx.com/fxml" >
+    <stylesheets>
+        <URL value="@../../common/css/application.css"/>
+    </stylesheets>
+
     <top>
         <fx:include fx:id="mainMenu" source="/scenes/menu/menu.fxml"/>
     </top>
@@ -30,8 +35,8 @@
                         </Font>
                     </font>
                 </Label>
-                <Button fx:id="deleteTaskButton" text="Usuń" onAction="#deleteTaskFromList"/>
-                <Button fx:id="modifyTaskButton" text="Modyfikuj" onAction="#handleModifyTaskOnList"/>
+                <Button styleClass="button" fx:id="deleteTaskButton" text="Usuń" onAction="#deleteTaskFromList"/>
+                <Button styleClass="button" fx:id="modifyTaskButton" text="Modyfikuj" onAction="#handleModifyTaskOnList"/>
             </HBox>
         </VBox>
     </center>
