@@ -10,4 +10,10 @@ public class MenuController {
     private void handleAddTaskToList(ActionEvent event) {
         ChangeSceneProcessor.changeScene(getClass().getResource("/scenes/task/addTask.fxml"), "Dodaj nowe zadanie", null);
     }
+
+    @FXML
+    private void handleCancelButtonAction(ActionEvent event) {
+        System.exit(0);
+    }
+
 }

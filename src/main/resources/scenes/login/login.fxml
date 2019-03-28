@@ -49,12 +49,12 @@
             <FontAwesomeIconView  styleClass="glyph-icon" glyphName="KEY" layoutX="64.0" layoutY="149.0" size="25" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
             <JFXPasswordField styleClass="text-field" fx:id="passwordPF" GridPane.rowIndex="2" GridPane.columnIndex="2" promptText="Hasło"/>
-            <Label styleClass="wrong-credentials" fx:id="errorMsgLabel" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="3">
+            <Label styleClass="wrong-credentials" fx:id="errorMsgLabel" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.columnSpan="10">
             </Label>
-            <JFXButton text="Zamknij" styleClass="dialog-button" fx:id="cancelButton" GridPane.rowIndex="4" GridPane.columnIndex="2"
+            <JFXButton text="Zamknij" styleClass="button" fx:id="cancelButton" GridPane.rowIndex="4" GridPane.columnIndex="2"
                     GridPane.columnSpan="1" GridPane.halignment="LEFT" onAction="#handleCancelButtonAction" >
             </JFXButton>
-            <JFXButton text="Zaloguj" styleClass="dialog-button" fx:id="logInButton" GridPane.rowIndex="4" GridPane.columnIndex="2"
+            <JFXButton text="Zaloguj" styleClass="button" fx:id="logInButton" GridPane.rowIndex="4" GridPane.columnIndex="2"
                     GridPane.columnSpan="1" GridPane.halignment="RIGHT" onAction="#handleSubmitButtonAction" >
             </JFXButton>
         </GridPane>

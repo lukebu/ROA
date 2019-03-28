@@ -1,11 +1,14 @@
 package com.lukebu.workmt.tasks;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 import com.lukebu.workmt.events.EventProcessor;
 import com.lukebu.workmt.events.task.ModifyTaskEvent;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -16,27 +19,35 @@ import java.util.ResourceBundle;
 public class ModifyTaskController implements Initializable {
 
     @FXML
-    private TextField taskNameTF;
+    private JFXTextField taskNameTF;
     @FXML
-    private TextArea taskDescriptionTA;
+    private JFXTextArea taskDescriptionTA;
     @FXML
-    private DatePicker taskDueDateDP;
+    private JFXDatePicker taskDueDateDP;
     @FXML
-    private Button modifyTaskButton;
+    private JFXButton modifyTaskButton;
     @FXML
-    private  Button cancelButton;
+    private JFXButton cancelButton;
 
     private TaskDataProcessing taskDataProcessing = new TaskDataProcessing();
     private ObservableList<Task> taskObservableList = TaskData.getInstance().getTaskList();
 
+    private ModifyTaskEvent modifyTaskEvent = null;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        fillModifyForm(taskObservableList.indexOf(ModifyTaskEvent.getInstance().getTask()));
+
+       EventProcessor.getInstance().registerListener( event -> {
+           if (event instanceof ModifyTaskEvent){
+               int index = taskObservableList.indexOf(modifyTaskEvent.returnTask());
+               fillModifyForm(index);
+           }
+       });
     }
 
     @FXML
     private void modifyTask() throws SQLException {
-        modifyTaskOnList(taskObservableList.indexOf(ModifyTaskEvent.getInstance().getTask()),ModifyTaskEvent.getInstance().getTask().getTaskId() );
+       // modifyTaskOnList(taskObservableList.indexOf(ModifyTaskEvent.getInstance().getTask()),ModifyTaskEvent.getInstance().getTask().getTaskId() );
     }
 
     @FXML
@@ -52,7 +63,7 @@ public class ModifyTaskController implements Initializable {
         LocalDate taskEndDate = taskDueDateDP.getValue();
         taskDataProcessing.modifyTask(index, taskId,taskName, taskDescription,taskEndDate);
         cancel();
-        EventProcessor.getInstance().sendEvent(new ModifyTaskEvent());
+        //EventProcessor.getInstance().sendEvent(new ModifyTaskEvent());
     }
 
     @FXML

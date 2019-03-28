@@ -1,5 +1,9 @@
 package com.lukebu.workmt.tasks;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 import com.lukebu.workmt.events.EventProcessor;
 import com.lukebu.workmt.events.task.NewTaskEvent;
 import javafx.fxml.FXML;
@@ -12,15 +16,15 @@ import java.time.LocalDate;
 
 public class AddTaskController {
     @FXML
-    private TextField taskNameTF;
+    private JFXTextField taskNameTF;
     @FXML
-    private TextArea taskDescriptionTA;
+    private JFXTextArea taskDescriptionTA;
     @FXML
-    private DatePicker taskDueDateDP;
+    private JFXDatePicker taskDueDateDP;
     @FXML
-    private Button addNewTaskButton;
+    private JFXButton addNewTaskButton;
     @FXML
-    private Button cancelButton;
+    private JFXButton cancelButton;
 
     private TaskDataProcessing taskDataProcessing = new TaskDataProcessing();
 

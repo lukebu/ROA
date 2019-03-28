@@ -1,5 +1,7 @@
 package com.lukebu.workmt.dashboard;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXListView;
 import com.lukebu.workmt.ChangeSceneProcessor;
 import com.lukebu.workmt.events.EventProcessor;
 import com.lukebu.workmt.events.task.ModifyTaskEvent;
@@ -13,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,17 +27,19 @@ public class DashboardController implements Initializable {
     private ObservableList<Task> tasks = FXCollections.observableArrayList();
 
     @FXML
-    private ListView<Task> taskListView;
+    private JFXListView<Task> taskListView;
     @FXML
-    private TextArea taskAreaDetails;
+    private Label taskAreaDetails;
     @FXML
     private Label dueDateLabel;
     @FXML
     private Label dueDateLabelText;
     @FXML
-    private Button deleteTaskButton;
+    private JFXButton deleteTaskButton;
     @FXML
-    private Button modifyTaskButton;
+    private JFXButton modifyTaskButton;
+    @FXML
+    private BorderPane rootPane;
 
     private TaskDataProcessing taskDataProcessing = new TaskDataProcessing();
 
@@ -80,7 +85,7 @@ public class DashboardController implements Initializable {
 
     private void disableFormData() {
         if (taskListView.getSelectionModel().isEmpty()){
-            taskAreaDetails.clear();
+            taskAreaDetails.setText("");
             dueDateLabel.setText("");
             dueDateLabelText.setText("");
             modifyTaskButton.setDisable(true);
@@ -95,7 +100,8 @@ public class DashboardController implements Initializable {
     private void handleModifyTaskOnList(ActionEvent event) {
         Task task = taskListView.getSelectionModel().getSelectedItem();
         ModifyTaskEvent modifyTaskEvent = new ModifyTaskEvent();
-        modifyTaskEvent.setTaskToModify(task);
+        modifyTaskEvent.setTask(task);
+        EventProcessor.getInstance().sendEvent(modifyTaskEvent);
         ChangeSceneProcessor.changeScene(getClass().getResource("/scenes/task/modifyTask.fxml"), "Zmodyfikuj zadanie", null);
     }
 

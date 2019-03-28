@@ -11,7 +11,7 @@
     </stylesheets>
 
     <Menu text="Plik">
-        <MenuItem text="Zakończ"/>
+        <MenuItem text="Zakończ" onAction="#handleCancelButtonAction"/>
     </Menu>
     <Menu text="Zadania">
         <MenuItem text="Lista zadań"/>

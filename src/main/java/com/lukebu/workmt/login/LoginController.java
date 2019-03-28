@@ -35,6 +35,10 @@ public class LoginController implements Initializable {
     private Connector connector = new Connector();
     private LoginQuery loginQuery = new LoginQuery();
 
+    private static final int SCENE_WIDTH_SMALL = 1280;
+    private static final int SCENE_HIGH_SMALL = 720;
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println(":)");
@@ -81,7 +85,7 @@ public class LoginController implements Initializable {
         } else {
             loginTextField.clear();
             passwordPF.clear();
-            errorMsgLabel.setText("Username or Password is not Correct");
+            errorMsgLabel.setText("Username or Password is not correct");
         }
     }
 
@@ -94,6 +98,8 @@ public class LoginController implements Initializable {
             Parent parent = FXMLLoader.load(getClass().getResource("/scenes/dashboard/dashboard.fxml"));
             Stage stage = new Stage(StageStyle.UTILITY);
             stage.setTitle("Work MT");
+            stage.setMinHeight(SCENE_HIGH_SMALL);
+            stage.setMinWidth(SCENE_WIDTH_SMALL);
             stage.setScene(new Scene(parent));
             stage.show();
         }
