@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.lukebu.workmt.ChangeSceneProcessor;
 import com.lukebu.workmt.events.EventProcessor;
+import com.lukebu.workmt.events.contact.ContactListEvent;
 import com.lukebu.workmt.events.task.ModifyTaskEvent;
 import com.lukebu.workmt.events.task.NewTaskEvent;
 import com.lukebu.workmt.tasks.*;
@@ -13,9 +14,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -51,18 +56,27 @@ public class DashboardController implements Initializable {
             e.printStackTrace();
         }
 
-        EventProcessor.getInstance().registerListener( event -> {
-            if(event instanceof NewTaskEvent || event instanceof ModifyTaskEvent) {
-                refreshView();
-            }
-        });
-
         tasks = TaskData.getInstance().getTaskList();
         findListChange();
         taskListView.setItems(tasks);
         taskListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         taskListView.getSelectionModel().selectFirst();
         disableFormData();
+
+        EventProcessor.getInstance().registerListener( event -> {
+            if(event instanceof NewTaskEvent || event instanceof ModifyTaskEvent) {
+                refreshView();
+            }  else if (event instanceof ContactListEvent) {
+                try {
+                    Parent parent = FXMLLoader.load(getClass().getResource("/scenes/contact/contactList.fxml"));
+                    Stage stage = (Stage) taskListView.getScene().getWindow();
+                    Scene scene = new Scene(parent);
+                    stage.setScene(scene);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void refreshView() {
@@ -98,12 +112,13 @@ public class DashboardController implements Initializable {
 
     @FXML
     private void handleModifyTaskOnList(ActionEvent event) {
+        ChangeSceneProcessor.changeScene(getClass().getResource("/scenes/task/modifyTask.fxml"), "Zmodyfikuj zadanie", null);
+
         Task task = taskListView.getSelectionModel().getSelectedItem();
         ModifyTaskEvent modifyTaskEvent = new ModifyTaskEvent();
         modifyTaskEvent.setTask(task);
         EventProcessor.getInstance().sendEvent(modifyTaskEvent);
-        ChangeSceneProcessor.changeScene(getClass().getResource("/scenes/task/modifyTask.fxml"), "Zmodyfikuj zadanie", null);
-    }
+     }
 
     @FXML
     private void deleteTaskFromList() throws SQLException, IOException {

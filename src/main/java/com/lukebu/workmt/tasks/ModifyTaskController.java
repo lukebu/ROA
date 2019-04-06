@@ -32,22 +32,24 @@ public class ModifyTaskController implements Initializable {
     private TaskDataProcessing taskDataProcessing = new TaskDataProcessing();
     private ObservableList<Task> taskObservableList = TaskData.getInstance().getTaskList();
 
-    private ModifyTaskEvent modifyTaskEvent = null;
+    private int index;
+    private Task task;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
        EventProcessor.getInstance().registerListener( event -> {
            if (event instanceof ModifyTaskEvent){
-               int index = taskObservableList.indexOf(modifyTaskEvent.returnTask());
+               index = taskObservableList.indexOf(((ModifyTaskEvent) event).returnTask());
                fillModifyForm(index);
+               task = taskObservableList.get(index);
            }
        });
     }
 
     @FXML
     private void modifyTask() throws SQLException {
-       // modifyTaskOnList(taskObservableList.indexOf(ModifyTaskEvent.getInstance().getTask()),ModifyTaskEvent.getInstance().getTask().getTaskId() );
+       modifyTaskOnList(index,task.getTaskId());
     }
 
     @FXML
@@ -63,7 +65,7 @@ public class ModifyTaskController implements Initializable {
         LocalDate taskEndDate = taskDueDateDP.getValue();
         taskDataProcessing.modifyTask(index, taskId,taskName, taskDescription,taskEndDate);
         cancel();
-        //EventProcessor.getInstance().sendEvent(new ModifyTaskEvent());
+        EventProcessor.getInstance().sendEvent(new ModifyTaskEvent());
     }
 
     @FXML
@@ -73,6 +75,4 @@ public class ModifyTaskController implements Initializable {
         taskDescriptionTA.setText(task.getTaskDescription());
         taskDueDateDP.setValue(task.getTaskDueDate());
     }
-
-
 }

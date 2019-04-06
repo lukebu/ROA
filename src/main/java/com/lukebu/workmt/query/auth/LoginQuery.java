@@ -1,4 +1,4 @@
-package com.lukebu.workmt.query.task;
+package com.lukebu.workmt.query.auth;
 
 public class LoginQuery {
 

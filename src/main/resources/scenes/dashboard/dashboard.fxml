@@ -25,7 +25,7 @@
     <center>
         <BorderPane>
             <center>
-                <VBox prefHeight="363.0" prefWidth="1123.0">
+                <VBox prefHeight="363.0" prefWidth="1123.0" >
                     <Label fx:id="taskAreaDetails" styleClass="whiteLabel" />
                     <HBox>
                         <Label fx:id="dueDateLabelText" styleClass="whiteLabel" text="Due: ">

@@ -21,5 +21,4 @@ public class EventProcessor {
     public void sendEvent(Event event) {
         eventConsumers.forEach(eventConsumer -> eventConsumer.accept(event));
     }
-
 }

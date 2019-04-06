@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+
+<?import javafx.scene.layout.StackPane?>
+<BorderPane fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.172-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lukebu.workmt.contact.ContactListController"
+            minWidth="1280" minHeight="720">
+    <stylesheets>
+        <URL value="@../../common/css/application.css" />
+    </stylesheets>
+
+    <top>
+        <fx:include fx:id="mainMenu" source="/scenes/menu/menu.fxml" />
+    </top>
+    <center>
+        <StackPane >
+        <TableView fx:id="tableView" >
+            <columns>
+                <TableColumn fx:id="contactName" prefWidth="75.0" text="Imię" />
+                <TableColumn fx:id="contactSurname" prefWidth="75.0" text="Nazwisko" />
+                <TableColumn fx:id="mobilePhone" prefWidth="75.0" text="Mobile" />
+                <TableColumn fx:id="desktopPhone" prefWidth="75.0" text="Desktop" />
+                <TableColumn fx:id="email" prefWidth="75.0" text="Email" />
+                <TableColumn fx:id="contactType" prefWidth="75.0" text="Typ" />
+            </columns>
+        </TableView>
+        </StackPane>
+    </center>
+    <bottom>
+        <fx:include fx:id="footer" source="/scenes/footer/footer.fxml" />
+    </bottom>
+</BorderPane>

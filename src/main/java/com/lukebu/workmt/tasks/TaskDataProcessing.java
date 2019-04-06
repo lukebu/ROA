@@ -101,6 +101,4 @@ public class TaskDataProcessing {
         ObservableList<Task> tasks = TaskData.getInstance().getTaskList();
         return tasks;
     }
-
-
 }

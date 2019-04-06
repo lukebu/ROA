@@ -28,7 +28,7 @@ public class ChangeSceneProcessor {
             if (parentStage != null) {
                 stage = parentStage;
             } else {
-                stage = new Stage(StageStyle.UTILITY);
+                stage = new Stage(StageStyle.DECORATED);
             }
 
             stage.setTitle(title);
@@ -41,17 +41,17 @@ public class ChangeSceneProcessor {
         return controller;
     }
 
-    public static <T> T loadScene(String fxmlFile) {
+    public static void loadScene(String fxmlFile, Scene scene) {
         try {
             URL location = ChangeSceneProcessor.class.getResource("/scenes/" + fxmlFile);
             FXMLLoader loader = new FXMLLoader(location);
-            loader.load();
-            return loader.getController();
+            Parent parent = loader.load();
+            Stage stage = null;
+            stage.setScene(new Scene(parent));
         }
         catch (IOException ex) {
             ex.printStackTrace();
             throw new RuntimeException(ex);
         }
     }
-
 }

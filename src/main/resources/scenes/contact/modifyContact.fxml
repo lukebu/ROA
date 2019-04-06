@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lukebu.workmt.contact.ModifyContactController">
+    <stylesheets>
+        <URL value="@../../common/css/application.css" />
+    </stylesheets>
+    <BorderPane>
+        <center>
+            <GridPane hgap="10" vgap="10">
+                <Label styleClass="whiteLabel" text="Imię" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <JFXTextField fx:id="contactNameTF" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <Label styleClass="whiteLabel" text="Nazwisko" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <JFXTextField fx:id="contactSurnameTF" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label styleClass="whiteLabel" text="Mobile" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <JFXTextField fx:id="mobileNumberTF" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Label styleClass="whiteLabel" text="Desktop" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                <JFXTextField fx:id="desktopNumberTF" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Label styleClass="whiteLabel" text="Email" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                <JFXTextField fx:id="contactEmailTF" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <Label styleClass="whiteLabel" text="Email" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                <JFXComboBox fx:id="contactTypeTF" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <padding>
+                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                </padding>
+            </GridPane>
+        </center>
+        <bottom>
+            <HBox>
+                <Region prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                <JFXButton fx:id="modifyContactkButton"  text="Zatwierdź zmiany" />
+                <JFXButton fx:id="cancelButton"  text="Anuluj" onAction="#cancel" />
+                <padding>
+                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                </padding>
+            </HBox>
+        </bottom>
+    </BorderPane>
+</StackPane>
