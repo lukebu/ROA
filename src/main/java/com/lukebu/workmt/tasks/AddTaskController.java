@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.lukebu.workmt.events.EventProcessor;
 import com.lukebu.workmt.events.task.NewTaskEvent;
+import com.lukebu.workmt.events.task.TaskListEvent;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
@@ -35,8 +36,7 @@ public class AddTaskController {
         LocalDate taskEndDate = taskDueDateDP.getValue();
         taskDataProcessing.addTask(taskName, taskDescription,taskEndDate);
         cancel();
-
-        EventProcessor.getInstance().sendEvent(new NewTaskEvent());
+        EventProcessor.getInstance().sendEvent(new TaskListEvent());
     }
 
     @FXML

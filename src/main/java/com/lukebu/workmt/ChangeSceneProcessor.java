@@ -1,5 +1,6 @@
 package com.lukebu.workmt;
 
+import com.lukebu.workmt.events.EventProcessor;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -34,6 +35,8 @@ public class ChangeSceneProcessor {
             stage.setTitle(title);
             setStageIcon(stage);
             stage.setScene(new Scene(parent));
+            //EventProcessor.getInstance().handleEvent(stage);
+
             stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();

@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.lukebu.workmt.events.EventProcessor;
 import com.lukebu.workmt.events.task.ModifyTaskEvent;
+import com.lukebu.workmt.events.task.TaskListEvent;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -65,7 +66,7 @@ public class ModifyTaskController implements Initializable {
         LocalDate taskEndDate = taskDueDateDP.getValue();
         taskDataProcessing.modifyTask(index, taskId,taskName, taskDescription,taskEndDate);
         cancel();
-        EventProcessor.getInstance().sendEvent(new ModifyTaskEvent());
+        EventProcessor.getInstance().sendEvent(new TaskListEvent());
     }
 
     @FXML

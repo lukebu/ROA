@@ -7,6 +7,7 @@ import com.lukebu.workmt.events.EventProcessor;
 import com.lukebu.workmt.events.contact.ContactListEvent;
 import com.lukebu.workmt.events.task.ModifyTaskEvent;
 import com.lukebu.workmt.events.task.NewTaskEvent;
+import com.lukebu.workmt.events.task.TaskListEvent;
 import com.lukebu.workmt.tasks.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -63,18 +64,13 @@ public class DashboardController implements Initializable {
         taskListView.getSelectionModel().selectFirst();
         disableFormData();
 
-        EventProcessor.getInstance().registerListener( event -> {
-            if(event instanceof NewTaskEvent || event instanceof ModifyTaskEvent) {
+        EventProcessor.getInstance().registerListener(event -> {
+            if (event instanceof NewTaskEvent || event instanceof TaskListEvent) {
                 refreshView();
-            }  else if (event instanceof ContactListEvent) {
-                try {
-                    Parent parent = FXMLLoader.load(getClass().getResource("/scenes/contact/contactList.fxml"));
-                    Stage stage = (Stage) taskListView.getScene().getWindow();
-                    Scene scene = new Scene(parent);
-                    stage.setScene(scene);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            } else if (event instanceof ContactListEvent) {
+                URL urlToContactList = getClass().getResource("/scenes/contact/contactList.fxml");
+                Stage stage = (Stage) taskListView.getScene().getWindow();
+                ChangeSceneProcessor.changeScene(urlToContactList, "Work MT", stage);
             }
         });
     }
