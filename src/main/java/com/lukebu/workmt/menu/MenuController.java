@@ -1,24 +1,15 @@
 package com.lukebu.workmt.menu;
 
 import com.lukebu.workmt.ChangeSceneProcessor;
-import com.lukebu.workmt.events.EventProcessor;
-import com.lukebu.workmt.events.contact.ContactListEvent;
-import com.lukebu.workmt.events.task.ModifyTaskEvent;
-import com.lukebu.workmt.events.task.NewTaskEvent;
-import com.lukebu.workmt.events.task.TaskListEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 public class MenuController {
+
+    @FXML
+    private MenuBar menuBar;
 
     @FXML
     private void handleAddTaskToList(ActionEvent event) {
@@ -27,17 +18,18 @@ public class MenuController {
 
     @FXML
     private void handleContactList(ActionEvent event) {
-        EventProcessor.getInstance().sendEvent(new ContactListEvent());
+        Stage stage = (Stage) menuBar.getScene().getWindow();
+        ChangeSceneProcessor.changeScene(getClass().getResource("/scenes/contact/contactList.fxml"), "Work MT", stage);
     }
 
     @FXML
     private void handleTaskList(ActionEvent event) {
-        EventProcessor.getInstance().sendEvent(new TaskListEvent());
+        Stage stage = (Stage) menuBar.getScene().getWindow();
+        ChangeSceneProcessor.changeScene(getClass().getResource("/scenes/dashboard/dashboard.fxml"), "Work MT", stage);
     }
 
     @FXML
     private void handleCancelButtonAction(ActionEvent event) {
         System.exit(0);
     }
-
 }

@@ -3,7 +3,7 @@ package com.lukebu.workmt.events.task;
 import com.lukebu.workmt.events.Event;
 import com.lukebu.workmt.tasks.Task;
 
-public class ModifyTaskEvent extends Event {
+public class StartModifyTaskEvent extends Event {
     private Task task;
 
     public void setTask(Task task) {

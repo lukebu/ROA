@@ -1,5 +1,8 @@
 package com.lukebu.workmt.contact;
 
+import com.lukebu.workmt.ChangeSceneProcessor;
+import com.lukebu.workmt.events.EventProcessor;
+import com.lukebu.workmt.events.task.TaskListEvent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -8,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -76,7 +80,7 @@ public class ContactListController implements Initializable {
 //        ChangeSceneProcessor.changeScene(getClass().getResource("/scenes/task/modifyTask.fxml"), "Zmodyfikuj zadanie", null);
 
         /*Contact contact = tableView.getSelectionModel().getSelectedItem();
-        ModifyTaskEvent modifyTaskEvent = new ModifyTaskEvent();
+        StartModifyTaskEvent modifyTaskEvent = new StartModifyTaskEvent();
         modifyTaskEvent.setTask(task);
         EventProcessor.getInstance().sendEvent(modifyTaskEvent);*/
     }

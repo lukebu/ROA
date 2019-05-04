@@ -3,7 +3,7 @@
 <?import javafx.scene.control.MenuItem?>
 
 <?import java.net.URL?>
-<MenuBar styleClass="menu-bar" fx:controller="com.lukebu.workmt.menu.MenuController" xmlns="http://javafx.com/javafx"
+<MenuBar fx:id="menuBar" styleClass="menu-bar" fx:controller="com.lukebu.workmt.menu.MenuController" xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml ">
 
     <stylesheets>
@@ -16,12 +16,10 @@
     <Menu text="Zadania">
         <MenuItem text="Lista zadań" onAction="#handleTaskList"/>
         <MenuItem text="Dodaj zadanie" onAction="#handleAddTaskToList"/>
-
     </Menu>
     <Menu text="Kontakty">
         <MenuItem text="Lista kontaktów" onAction="#handleContactList"/>
         <MenuItem text="Dodaj kontakt"/>
-
     </Menu>
     <Menu text="O nas">
         <MenuItem text="about"/>

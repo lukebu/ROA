@@ -5,11 +5,9 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.lukebu.workmt.events.EventProcessor;
-import com.lukebu.workmt.events.task.NewTaskEvent;
-import com.lukebu.workmt.events.task.TaskListEvent;
+import com.lukebu.workmt.events.task.EndNewTaskEvent;
 import javafx.fxml.FXML;
 
-import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
@@ -36,7 +34,7 @@ public class AddTaskController {
         LocalDate taskEndDate = taskDueDateDP.getValue();
         taskDataProcessing.addTask(taskName, taskDescription,taskEndDate);
         cancel();
-        EventProcessor.getInstance().sendEvent(new TaskListEvent());
+        EventProcessor.getInstance().sendEvent(new EndNewTaskEvent());
     }
 
     @FXML

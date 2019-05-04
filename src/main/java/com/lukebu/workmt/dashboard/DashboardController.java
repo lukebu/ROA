@@ -5,9 +5,7 @@ import com.jfoenix.controls.JFXListView;
 import com.lukebu.workmt.ChangeSceneProcessor;
 import com.lukebu.workmt.events.EventProcessor;
 import com.lukebu.workmt.events.contact.ContactListEvent;
-import com.lukebu.workmt.events.task.ModifyTaskEvent;
-import com.lukebu.workmt.events.task.NewTaskEvent;
-import com.lukebu.workmt.events.task.TaskListEvent;
+import com.lukebu.workmt.events.task.*;
 import com.lukebu.workmt.tasks.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -15,10 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -44,6 +39,7 @@ public class DashboardController implements Initializable {
     private JFXButton deleteTaskButton;
     @FXML
     private JFXButton modifyTaskButton;
+
     @FXML
     private BorderPane rootPane;
 
@@ -65,12 +61,8 @@ public class DashboardController implements Initializable {
         disableFormData();
 
         EventProcessor.getInstance().registerListener(event -> {
-            if (event instanceof NewTaskEvent || event instanceof TaskListEvent) {
+            if (event instanceof EndNewTaskEvent || event instanceof EndModifyTaskEvent) {
                 refreshView();
-            } else if (event instanceof ContactListEvent) {
-                URL urlToContactList = getClass().getResource("/scenes/contact/contactList.fxml");
-                Stage stage = (Stage) taskListView.getScene().getWindow();
-                ChangeSceneProcessor.changeScene(urlToContactList, "Work MT", stage);
             }
         });
     }
@@ -89,7 +81,7 @@ public class DashboardController implements Initializable {
                     dueDateLabel.setText(item.getTaskDueDate().toString());
                     disableFormData();
                 }
-            };
+            }
         });
     }
 
@@ -111,9 +103,9 @@ public class DashboardController implements Initializable {
         ChangeSceneProcessor.changeScene(getClass().getResource("/scenes/task/modifyTask.fxml"), "Zmodyfikuj zadanie", null);
 
         Task task = taskListView.getSelectionModel().getSelectedItem();
-        ModifyTaskEvent modifyTaskEvent = new ModifyTaskEvent();
-        modifyTaskEvent.setTask(task);
-        EventProcessor.getInstance().sendEvent(modifyTaskEvent);
+        StartModifyTaskEvent startModifyTaskEvent = new StartModifyTaskEvent();
+        startModifyTaskEvent.setTask(task);
+        EventProcessor.getInstance().sendEvent(startModifyTaskEvent);
      }
 
     @FXML

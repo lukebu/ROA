@@ -31,10 +31,4 @@ public class ModifyContactController {
         Stage stage = (Stage) contactNameTF.getScene().getWindow();
         stage.close();
     }
-
-    private void fillModifyForm() {
-
-    }
-
-
 }
